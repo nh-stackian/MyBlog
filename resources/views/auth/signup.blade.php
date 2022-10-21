@@ -7,10 +7,17 @@ signup
 @section('content')
 <div class="card-body register-card-body">
     <p class="login-box-msg">Register a new membership</p>
-
-    <form action="/admin/index.html" method="post">
+    @if (count($errors) > 0)
+    <ul>
+    @foreach ($errors->all() as $error)
+    <li style="color: red">{{$error}}</li>
+    @endforeach
+    </ul>
+    @endif
+    <form action="{{Route('register.post')}}" method="post">
+        @csrf
       <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Full name">
+        <input type="text" name="name" class="form-control" placeholder="Full name" value="{{old('name')}}" required>
         <div class="input-group-append">
           <div class="input-group-text">
             <span class="fas fa-user"></span>
@@ -18,7 +25,7 @@ signup
         </div>
       </div>
       <div class="input-group mb-3">
-        <input type="email" class="form-control" placeholder="Email">
+        <input type="email" name="email" class="form-control" placeholder="Email" value="{{old('email')}}" required>
         <div class="input-group-append">
           <div class="input-group-text">
             <span class="fas fa-envelope"></span>
@@ -26,7 +33,7 @@ signup
         </div>
       </div>
       <div class="input-group mb-3">
-        <input type="password" class="form-control" placeholder="Password">
+        <input type="password" class="form-control" name="password" placeholder="Password" required>
         <div class="input-group-append">
           <div class="input-group-text">
             <span class="fas fa-lock"></span>
@@ -34,7 +41,7 @@ signup
         </div>
       </div>
       <div class="input-group mb-3">
-        <input type="password" class="form-control" placeholder="Retype password">
+        <input type="password" class="form-control" name="cpassword" placeholder="Confirm Password" required>
         <div class="input-group-append">
           <div class="input-group-text">
             <span class="fas fa-lock"></span>
@@ -70,6 +77,6 @@ signup
       </a>
     </div>
 
-    <a href="login.html" class="text-center">I already have a membership</a>
+    <a href="{{Route('login')}}" class="text-center">I already have a membership</a>
   </div>
 @endsection
